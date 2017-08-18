@@ -33,6 +33,12 @@ export const string2csv = ((data, headers, separator) =>
   (headers) ? `${headers.join(separator)}\n${data}`: data
 );
 
+export const buildURI = (data, headers, separator) => {
+ const csvContent=toCSV(data, headers, separator);
+ const blobdata = new Blob([csvContent],{type : 'text/csv'});
+ return window.URL.createObjectURL(blobdata); 
+};
+
 export const toCSV = (data, headers, separator) => {
  if (isJsons(data)) return jsons2csv(data, headers, separator);
  if (isArrays(data)) return arrays2csv(data, headers, separator);
@@ -40,7 +46,4 @@ export const toCSV = (data, headers, separator) => {
  throw new TypeError(`Data should be a "String", "Array of arrays" OR "Array of objects" `);
 };
 
-export const buildURI = ((data, headers, separator) => encodeURI(
-  `data:text/csv;charset=utf-8,\uFEFF${toCSV(data, headers, separator)}`
- )
-);
+export default buildURI;

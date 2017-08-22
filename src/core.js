@@ -36,7 +36,7 @@ export const string2csv = ((data, headers, separator) =>
 export const buildURI = (data, headers, separator) => {
  const csvContent=toCSV(data, headers, separator);
  const blobdata = new Blob([csvContent],{type : 'text/csv'});
- return window.URL.createObjectURL(blobdata); 
+ return blobdata; 
 };
 
 export const toCSV = (data, headers, separator) => {
